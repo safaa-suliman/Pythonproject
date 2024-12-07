@@ -13,11 +13,11 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.cluster import KMeans
 from sklearn.decomposition import NMF  # Import NMF
 nltk.data.path.append('./nltk_data')  # Specify the path to pre-downloaded data
-# Download NLTK data
-nltk.download("punkt")
-nltk.download("stopwords")
 
+nltk.download("punkt", download_dir="./nltk_data")
+nltk.download("stopwords", download_dir="./nltk_data")
 
+nltk.data.path.append('./nltk_data')
 # Set page configuration
 st.set_page_config(page_title="Document Analysis Webpage", page_icon="📄", layout="wide")
 st.subheader("Hi, This is a web for analyzing documents :wave:")
