@@ -13,7 +13,9 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.cluster import KMeans
 from sklearn.decomposition import NMF  # Import NMF
 nltk.data.path.append('./nltk_data')  # Specify the path to pre-downloaded data
-
+# Download NLTK data
+nltk.download("punkt")
+nltk.download("stopwords")
 
 
 # Set page configuration
