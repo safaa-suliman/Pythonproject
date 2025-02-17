@@ -30,7 +30,7 @@ nltk.data.path.append('./nltk_data')
 st.set_page_config(page_title="Document Analysis Webpage", page_icon="📄", layout="wide")
 st.subheader("Hi, This is a web for analyzing documents :wave:")
 st.title("A Data Analyst From Sudan")
-st.write(print(nltk.data.path))
+st.write(nltk.data.path)
 st.write("[My GitHub >](https://github.com/safa-suliman)")
 
 # Define the function to extract text from a PDF
