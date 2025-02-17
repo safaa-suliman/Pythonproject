@@ -16,6 +16,10 @@ import nltk
 import nltk
 import os
 
+import nltk
+import os
+import streamlit as st
+
 # Specify a custom directory for NLTK data
 nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
 nltk.data.path.append(nltk_data_dir)
@@ -23,6 +27,15 @@ nltk.data.path.append(nltk_data_dir)
 # Ensure the directory exists
 if not os.path.exists(nltk_data_dir):
     os.makedirs(nltk_data_dir)
+
+# Download the 'punkt' tokenizer to the custom directory
+nltk.download('punkt', download_dir=nltk_data_dir)
+
+# Print the NLTK data path for debugging
+st.write("NLTK data path:", nltk.data.path)
+
+# File uploader
+uploaded_files = st.file_uploader("Upload your PDF files", type="pdf", accept_multiple_files=True)
 
 # Download the 'punkt' tokenizer to the custom directory
 nltk.download('punkt', download_dir=nltk_data_dir)
