@@ -132,7 +132,7 @@ def nmf_topic_modeling_on_specific_word(texts, num_topics=3):
 
 # Streamlit App
 st.title("📂 Document Analysis - Enhanced Features")
-
+print(nltk.data.path)
 # File uploader for multiple PDFs
 uploaded_files = st.file_uploader("Upload multiple PDF files", type="pdf", accept_multiple_files=True)
 
