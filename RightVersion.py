@@ -13,6 +13,19 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.cluster import KMeans
 from sklearn.decomposition import NMF  # Import NMF
 import nltk
+import nltk
+import os
+
+# Specify a custom directory for NLTK data
+nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
+nltk.data.path.append(nltk_data_dir)
+
+# Ensure the directory exists
+if not os.path.exists(nltk_data_dir):
+    os.makedirs(nltk_data_dir)
+
+# Download the 'punkt' tokenizer to the custom directory
+nltk.download('punkt', download_dir=nltk_data_dir)
 
 # Download the punkt_tab resource
 nltk.download('punkt_tab')
