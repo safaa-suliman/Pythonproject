@@ -1,24 +1,17 @@
 import streamlit as st
 import os
-import pandas as pd
 import fitz  # PyMuPDF for PDF processing
-import shutil  # For clearing temporary files
 import nltk
-from collections import Counter
-from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-import re
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.cluster import KMeans
-from sklearn.decomposition import NMF  # Import NMF
-import nltk
-import nltk
-import os
+from nltk.corpus import stopwords
 
-import nltk
-import os
-import streamlit as st
+# Set page configuration (must be the first Streamlit command)
+st.set_page_config(page_title="Document Analysis Webpage", page_icon="📄", layout="wide")
+
+# Display app title and description
+st.title("Document Analysis Webpage")
+st.subheader("Hi, This is a web app for analyzing documents :wave:")
+st.write("[My GitHub >](https://github.com/safa-suliman)")
 
 # Specify a custom directory for NLTK data
 nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
@@ -28,52 +21,37 @@ nltk.data.path.append(nltk_data_dir)
 if not os.path.exists(nltk_data_dir):
     os.makedirs(nltk_data_dir)
 
-# Download the 'punkt' tokenizer to the custom directory
+# Download necessary NLTK resources
 nltk.download('punkt', download_dir=nltk_data_dir)
-
-# Print the NLTK data path for debugging
-st.write("NLTK data path:", nltk.data.path)
-
-# File uploader
-uploaded_files = st.file_uploader("Upload your PDF files", type="pdf", accept_multiple_files=True)
-
-# Download the 'punkt' tokenizer to the custom directory
-nltk.download('punkt', download_dir=nltk_data_dir)
-
-# Download the punkt_tab resource
-nltk.download('punkt_tab')
-import nltk
-nltk.download('punkt')
-nltk.data.path.append('./nltk_data')  # Specify the path to pre-downloaded data
-try:
-    nltk.download('punkt', download_dir='./nltk_data')
-    nltk.download('stopwords', download_dir='./nltk_data')
-except Exception as e:
-    print(f"Error downloading NLTK data: {e}")
-
-nltk.data.path.append('./nltk_data')
-# Set page configuration
-st.set_page_config(page_title="Document Analysis Webpage", page_icon="📄", layout="wide")
-st.subheader("Hi, This is a web for analyzing documents :wave:")
-st.title("A Data Analyst From Sudan")
-from nltk.data import find
-st.write('tokenizers/punkt')
-st.write(nltk.data.path)
-st.write("[My GitHub >](https://github.com/safa-suliman)")
+nltk.download('stopwords', download_dir=nltk_data_dir)
 
 # Define the function to extract text from a PDF
-def extract_text_from_pdf(pdf_path):
+def extract_text_from_pdf(pdf_file):
     try:
-        doc = fitz.open(pdf_path)
+        doc = fitz.open(stream=pdf_file.read(), filetype="pdf")  # Open the uploaded PDF file
         text = ""
         for page in doc:
             text += page.get_text()
         doc.close()
         return text
     except Exception as e:
-        st.error(f"Error processing {pdf_path}: {e}")
+        st.error(f"Error processing the PDF file: {e}")
         return ""
 
+# File uploader
+uploaded_files = st.file_uploader("Upload your PDF files", type="pdf", accept_multiple_files=True)
+
+# Process uploaded files
+if uploaded_files:
+    for uploaded_file in uploaded_files:
+        st.write(f"Processing file: {uploaded_file.name}")
+        pdf_text = extract_text_from_pdf(uploaded_file)
+        
+        if pdf_text:
+            st.write("Extracted Text:")
+            st.text_area("PDF Content", pdf_text, height=300)
+        else:
+            st.error("No text could be extracted from this PDF.")
 # Topic Modeling with NMF
 def nmf_topic_modeling(texts, num_topics=3):
     vectorizer = CountVectorizer(stop_words="english")
