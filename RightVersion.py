@@ -70,9 +70,13 @@ def analyze_texts(pdf_texts, top_n):
     all_text = " ".join([doc["text"] for doc in pdf_texts])
 
     # Preprocess and tokenize
-    stop_words = set(stopwords.words("english"))
-    words = word_tokenize(re.sub(r'\W+', ' ', all_text.lower()))
-    filtered_words = [word for word in words if word.isalnum() and word not in stop_words]
+   # stop_words = set(stopwords.words("english"))
+   # words = word_tokenize(re.sub(r'\W+', ' ', all_text.lower()))
+   # filtered_words = [word for word in words if word.isalnum() and word not in stop_words]
+def preprocess_text(text, language='english'):
+    # Clean and tokenize text
+    words = word_tokenize(re.sub(r'\W+', ' ', text.lower()))
+    return words
 
     # Count word frequencies
     word_counts = Counter(filtered_words)
