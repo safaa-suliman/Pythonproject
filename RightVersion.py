@@ -2,16 +2,9 @@ import streamlit as st
 import os
 import fitz  # PyMuPDF for PDF processing
 import nltk
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
 
-# Set page configuration (must be the first Streamlit command)
+# Set page configuration
 st.set_page_config(page_title="Document Analysis Webpage", page_icon="📄", layout="wide")
-
-# Display app title and description
-st.title("Document Analysis Webpage")
-st.subheader("Hi, This is a web app for analyzing documents :wave:")
-st.write("[My GitHub >](https://github.com/safa-suliman)")
 
 # Specify a custom directory for NLTK data
 nltk_data_dir = os.path.join(os.getcwd(), "nltk_data")
@@ -21,23 +14,33 @@ nltk.data.path.append(nltk_data_dir)
 if not os.path.exists(nltk_data_dir):
     os.makedirs(nltk_data_dir)
 
-# Download necessary NLTK resources
+# Download necessary NLTK data
 nltk.download('punkt', download_dir=nltk_data_dir)
 nltk.download('stopwords', download_dir=nltk_data_dir)
 
+# Debugging: Display the NLTK data path
+st.write("NLTK data path:", nltk.data.path)
+
+# File uploader
+uploaded_files = st.file_uploader("Upload your PDF files", type="pdf", accept_multiple_files=True)
+
 # Define the function to extract text from a PDF
-def extract_text_from_pdf(pdf_file):
+def extract_text_from_pdf(pdf_path):
     try:
-        doc = fitz.open(stream=pdf_file.read(), filetype="pdf")  # Open the uploaded PDF file
+        doc = fitz.open(pdf_path)
         text = ""
         for page in doc:
             text += page.get_text()
         doc.close()
         return text
     except Exception as e:
-        st.error(f"Error processing the PDF file: {e}")
+        st.error(f"Error processing {pdf_path}: {e}")
         return ""
 
+# Display a welcome message
+st.subheader("Hi, This is a web for analyzing documents :wave:")
+st.title("A Data Analyst From Sudan")
+st.write("[My GitHub >](https://github.com/safa-suliman)")
 # File uploader
 uploaded_files = st.file_uploader("Upload your PDF files", type="pdf", accept_multiple_files=True)
 
