@@ -13,6 +13,10 @@ from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.cluster import KMeans
 from sklearn.decomposition import NMF  # Import NMF
 import nltk
+
+# Download the punkt_tab resource
+nltk.download('punkt_tab')
+import nltk
 nltk.download('punkt')
 nltk.data.path.append('./nltk_data')  # Specify the path to pre-downloaded data
 try:
