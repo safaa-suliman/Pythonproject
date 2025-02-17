@@ -12,6 +12,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
 from sklearn.cluster import KMeans
 from sklearn.decomposition import NMF  # Import NMF
+import nltk
+nltk.download('punkt')
 nltk.data.path.append('./nltk_data')  # Specify the path to pre-downloaded data
 try:
     nltk.download('punkt', download_dir='./nltk_data')
